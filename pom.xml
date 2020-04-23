@@ -114,6 +114,7 @@
         <module>presto-postgresql</module>
         <module>presto-redshift</module>
         <module>presto-sqlserver</module>
+        <module>presto-informix</module>
         <module>presto-mongodb</module>
         <module>presto-bytecode</module>
         <module>presto-client</module>
@@ -903,6 +904,13 @@
                 <artifactId>mssql-jdbc</artifactId>
                 <version>7.0.0.jre8</version>
             </dependency>
+
+            <dependency>
+                <groupId>com.ibm.informix</groupId>
+                <artifactId>jdbc</artifactId>
+                <version>4.50.3</version>
+            </dependency>
+
 
             <dependency>
                 <groupId>jline</groupId>

@@ -133,6 +133,10 @@
             <outputDirectory>plugin/sqlserver</outputDirectory>
         </fileSet>
         <fileSet>
+            <directory>${project.build.directory}/dependency/presto-informix-${project.version}</directory>
+            <outputDirectory>plugin/informix</outputDirectory>
+        </fileSet>
+        <fileSet>
             <directory>${project.build.directory}/dependency/presto-raptor-${project.version}</directory>
             <outputDirectory>plugin/raptor</outputDirectory>
         </fileSet>
