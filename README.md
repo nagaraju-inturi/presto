@@ -1,4 +1,4 @@
-# Presto with Informix connector[![Build Status](https://travis-ci.org/prestodb/presto.svg?branch=master)](https://travis-ci.org/prestodb/presto)
+# Presto with Informix Connector [![Build Status](https://travis-ci.org/prestodb/presto.svg?branch=master)](https://travis-ci.org/prestodb/presto)
 
 Presto is a distributed SQL query engine for big data.
 
