@@ -25,6 +25,7 @@ import com.facebook.presto.plugin.jdbc.QueryBuilder;
 import com.facebook.presto.spi.PrestoException;
 import com.facebook.presto.spi.SchemaTableName;
 import com.facebook.presto.spi.type.Type;
+import com.facebook.presto.spi.type.VarcharType;
 import com.google.common.base.Joiner;
 import com.informix.jdbc.IfxDriver;
 
@@ -36,7 +37,12 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static com.facebook.presto.plugin.jdbc.JdbcErrorCode.JDBC_ERROR;
+import static com.facebook.presto.spi.StandardErrorCode.NOT_SUPPORTED;
+import static com.facebook.presto.spi.type.TimeWithTimeZoneType.TIME_WITH_TIME_ZONE;
+import static com.facebook.presto.spi.type.TimestampType.TIMESTAMP;
+import static com.facebook.presto.spi.type.TimestampWithTimeZoneType.TIMESTAMP_WITH_TIME_ZONE;
 import static com.facebook.presto.spi.type.VarbinaryType.VARBINARY;
+import static com.facebook.presto.spi.type.Varchars.isVarcharType;
 import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.lang.String.format;
 
@@ -130,6 +136,32 @@ public class InformixClient
         if (VARBINARY.equals(type)) {
             return "byte";
         }
+        if (TIME_WITH_TIME_ZONE.equals(type) || TIMESTAMP_WITH_TIME_ZONE.equals(type)) {
+            throw new PrestoException(NOT_SUPPORTED, "Unsupported column type: " + type.getDisplayName());
+        }
+        if (TIMESTAMP.equals(type)) {
+            return "datetime year to second";
+        }
+        if (isVarcharType(type)) {
+            VarcharType varcharType = (VarcharType) type;
+            if (varcharType.isUnbounded()) {
+                return "lvarchar";
+            }
+            if (varcharType.getLengthSafe() <= 255) {
+                return "varchar(255)";
+            }
+            if (varcharType.getLengthSafe() <= 2048) {
+                return "lvarchar";
+            }
+            if (varcharType.getLengthSafe() <= 32000) {
+                return "lvarchar(32000)";
+            }
+            if (varcharType.getLengthSafe() <= 16777215) {
+                return "text";
+            }
+            return "lvarchar";
+        }
+
         return super.toSqlType(type);
     }
 
