@@ -90,6 +90,5 @@ The following Informix statements are not yet supported:
 
 * :doc:`/sql/delete`
 * :doc:`/sql/update`
-* :doc:`/sql/alter-table`
 * :doc:`/sql/grant`
 * :doc:`/sql/revoke`
