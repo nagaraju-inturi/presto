@@ -28,6 +28,7 @@ from different data sources.
     connector/redis
     connector/redshift
     connector/sqlserver
+    connector/informix
     connector/system
     connector/thrift
     connector/tpcds
